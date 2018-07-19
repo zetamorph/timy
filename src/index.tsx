@@ -8,15 +8,16 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './store';
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(),
-);
+import '@blueprintjs/core/lib/css/blueprint.css';
+import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+
+const store = createStore(rootReducer, composeWithDevTools());
 
 render(
-  <Provider store={store}>
-    <TimesheetsPage />
-  </Provider>,
-  document.getElementById('root') as HTMLElement
+    <Provider store={store}>
+        <TimesheetsPage />
+    </Provider>,
+    document.getElementById('root') as HTMLElement,
 );
 registerServiceWorker();
