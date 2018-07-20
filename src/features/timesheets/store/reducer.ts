@@ -23,6 +23,10 @@ export const reducer: Reducer<ITimesheetsState, TimesheetsAction> = (state = ini
           [action.payload.id]: action.payload,
         },
       };
+    case getType(timesheetActions.deleteById):
+      const newState = { ...state };
+      delete newState.data[action.payload];
+      return newState;
     default:
       return state;
   }

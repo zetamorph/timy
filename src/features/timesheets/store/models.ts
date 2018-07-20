@@ -1,6 +1,7 @@
 export interface ITimesheetsState {
-  readonly errors: string;
+  readonly currentTimesheetId?: string;
   readonly data: { [id: string]: Timesheet };
+  readonly errors: string;
   readonly loading: boolean;
 }
 

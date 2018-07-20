@@ -8,3 +8,7 @@ export const create = createStandardAction('@@timesheets/CREATED').map((payload:
         ...payload,
     } as Timesheet,
 }));
+
+export const deleteById = createStandardAction('@@timesheets/DELETED').map((payload: string) => ({
+    payload,
+}));
