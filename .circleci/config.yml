@@ -3,7 +3,7 @@ jobs:
     build:
         docker:
             - image: circleci/node:10
-        working_directory: ~/repo
+        working_directory: ~/timy
 
         steps:
             - checkout
