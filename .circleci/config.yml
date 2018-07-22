@@ -31,3 +31,27 @@ jobs:
                     ./cc-reporter before-build
                     npm test -- --coverage
                     ./cc-reporter after-build --exit-code $?
+
+            - run:
+                name: Build
+                command: npm run build
+            
+            - save_cache:
+                paths:
+                    - build
+                key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+
+    deploy:
+        working_directory: ~/project
+        docker:
+            - image: circleci/node:10
+        steps:
+            - restore_cache:
+                key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+        
+            # Install AWS CLI
+            - run: sudo apt-get -y -qq install awscli
+            - run: aws configure set default.s3.signature_version s3v4
+            - run:
+                name: Deploy to S3
+                command: aws --region eu-central-1 s3 sync build s3://timy-dev/ --delete
