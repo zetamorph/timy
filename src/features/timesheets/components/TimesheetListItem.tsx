@@ -1,4 +1,4 @@
-import { Button, Card, Elevation } from '@blueprintjs/core';
+import { Button, Card, Elevation, Icon } from '@blueprintjs/core';
 import { addMinutes, format } from 'date-fns';
 import React from 'react';
 import { Timesheet } from '../store';
@@ -44,8 +44,12 @@ export class TimesheetListItem extends React.Component<IProps> {
                     <p>
                         { format(startDate, 'HH:mm') } - { format(endDate, 'HH:mm') }
                     </p>
-                    <Button intent="primary" onClick={this.editTimesheet}>X</Button>
-                    <Button intent="danger" onClick={this.deleteTimesheet}>X</Button>
+                    <Button intent="primary" onClick={this.editTimesheet}>
+                        <Icon icon="edit" />
+                    </Button>
+                    <Button intent="danger" onClick={this.deleteTimesheet}>
+                        <Icon icon="cross" />
+                    </Button>
                 </Card>    
             </React.Fragment>
         )

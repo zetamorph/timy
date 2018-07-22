@@ -1,0 +1,69 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: circleci/node:10
+        working_directory: ~/timy
+
+        steps:
+            - checkout
+            # Download and cache dependencies
+            - restore_cache:
+                keys:
+                - v1-dependencies-{{ checksum "package.json" }}
+                # fallback to using the latest cache if no exact match is found
+                - v1-dependencies-
+
+            - run: npm i
+            # download CodeClimate reporter
+            - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-reporter
+            - run: chmod +x ./cc-reporter
+            
+            - save_cache:
+                paths:
+                    - node_modules
+                key: v1-dependencies-{{ checksum "package.json" }}
+            
+            # run tests
+            - run:
+                name: Run Tests and collect coverage
+                command: |
+                    ./cc-reporter before-build
+                    npm test -- --coverage
+                    ./cc-reporter after-build --exit-code $?
+            # build the app
+            - run:
+                name: Build
+                command: npm run build
+                environment:
+                    NODE_ENV: production
+            # save the bundle for deployment
+            - save_cache:
+                paths:
+                    - build
+                key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+
+    deploy:
+        working_directory: ~/timy
+        docker:
+            - image: circleci/node:10
+        steps:
+            # get the built app from the cache
+            - restore_cache:
+                key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+        
+            # Install AWS CLI
+            - run: sudo apt-get -y -qq install awscli
+            - run: aws configure set default.s3.signature_version s3v4
+            - run:
+                name: Deploy to S3
+                command: aws --region eu-central-1 s3 sync build s3://timy.sh/ --delete
+
+workflows:
+    version: 2
+    build_and_deploy:
+        jobs:
+            - build
+            - deploy:
+                requires:
+                    - build
