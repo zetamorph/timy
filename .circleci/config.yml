@@ -20,7 +20,7 @@ jobs:
             - run:
                 name: Setup Code Climate test-reporter
                 command: |
-                    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter |
+                    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
                     chmod +x ./cc-reporter
             - save_cache:
                 paths:
@@ -31,6 +31,6 @@ jobs:
             - run:
                 name: Run Tests and collect coverage
                 command: |
-                    ./cc-reporter before-build |
-                    npm test -- --coverage |
+                    ./cc-reporter before-build
+                    npm test -- --coverage
                     ./cc-test-reporter after-build --exit-code $?
