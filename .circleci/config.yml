@@ -16,7 +16,7 @@ jobs:
                 - v1-dependencies-
 
             - run: npm ci
-            - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-reporter
             - run: chmod +x ./cc-reporter
             
             - save_cache:
