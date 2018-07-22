@@ -42,7 +42,7 @@ jobs:
                 key: v1-build-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
 
     deploy:
-        working_directory: ~/project
+        working_directory: ~/timy
         docker:
             - image: circleci/node:10
         steps:
