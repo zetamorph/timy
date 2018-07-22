@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux'
-import { ITimesheetsState, timesheetsReducer } from '../features/timesheets';
+import { FormStateMap, reducer as formReducer } from 'redux-form';
+import { ITimesheetState, timesheetReducer } from '../features/timesheets';
 
 export interface IAppState {
-  timesheets: ITimesheetsState;
+  form: FormStateMap;
+  timesheets: ITimesheetState;
 }
 ​
 export const rootReducer = combineReducers<IAppState>({
-  timesheets: timesheetsReducer,
+  form: formReducer,
+  timesheets: timesheetReducer,
 });

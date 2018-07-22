@@ -1,2 +1,2 @@
-export { timesheetsReducer, ITimesheetsState } from './store';
+export { timesheetReducer, ITimesheetState } from './store';
 export * from './main';

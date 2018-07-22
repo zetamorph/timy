@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { withState as TimesheetsForm } from './components/TimesheetsForm';
-import { withState as TimesheetsList } from './components/TimesheetsList';
+import React from 'react';
+import { AddTimesheet } from './containers/AddTimesheet';
+import { RecentTimesheets } from './containers/RecentTimesheets';
 
 export const TimesheetsPage = () => (
     <React.Fragment>
         <div style={{
             display: 'flex',
         }}>
-            <TimesheetsList />
+            <RecentTimesheets />
             <br />
-            <TimesheetsForm />
+            <AddTimesheet />
         </div>
     </React.Fragment>
 );

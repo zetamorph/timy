@@ -1,33 +1,60 @@
 import { Reducer } from 'redux';
 import { ActionType, getType } from 'typesafe-actions';
 import * as timesheetActions from './actions';
-import { ITimesheetsState } from './models';
+import { ITimesheetState } from './models';
 
 const initialState = {
-  data: {},
-  errors: '',
-  loading: false,
+    data: {},
+    errors: '',
+    loading: false,
 }
 
-type TimesheetsAction = ActionType<typeof timesheetActions>;
+type TimesheetAction = ActionType<typeof timesheetActions>;
 
-export const reducer: Reducer<ITimesheetsState, TimesheetsAction> = (state = initialState, action: TimesheetsAction) => {
-  console.log(action);
-  // tslint:disable-next-line:no-small-switch
-  switch(action.type) {
-    case getType(timesheetActions.create):
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [action.payload.id]: action.payload,
-        },
-      };
-    case getType(timesheetActions.deleteById):
-      const newState = { ...state };
-      delete newState.data[action.payload];
-      return newState;
-    default:
-      return state;
-  }
+export const reducer: Reducer<ITimesheetState, TimesheetAction> = (state = initialState, action: TimesheetAction) => {
+    switch (action.type) {
+        case getType(timesheetActions.create): {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [action.payload.id]: action.payload,
+                },
+            };
+        }
+
+        case getType(timesheetActions.deleteById): {
+            const newData = { ...state.data };
+            delete newData[action.payload];
+            return {
+                ...state,
+                data: newData,
+            };
+        }
+            
+        case getType(timesheetActions.setCurrentTimesheet): {
+            return {
+                ...state,
+                currentTimesheetId: action.payload,
+            };
+        }
+            
+        case getType(timesheetActions.updateById): {
+            const updatedData = {
+                ...state.data,
+                [action.payload.id]: {
+                    ...state.data[action.payload.id],
+                    ...action.payload,
+                },
+            };
+            return {
+                ...state,
+                data: updatedData,
+            };
+        }
+
+        default: {
+            return state;
+        }
+    }
 };

@@ -1,5 +1,8 @@
-import * as timesheetsActions from './actions';
-export * from './models';
-export { reducer as timesheetsReducer } from './reducer';
+import * as timesheetActions from './actions';
+import * as timesheetSelectors from './selectors';
 
-export { timesheetsActions };
+export * from './models';
+export { reducer as timesheetReducer } from './reducer';
+
+export { timesheetActions };
+export { timesheetSelectors };
