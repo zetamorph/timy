@@ -16,12 +16,9 @@ jobs:
                 - v1-dependencies-
 
             - run: npm ci
-        
-            - run:
-                name: Setup Code Climate test-reporter
-                command: |
-                    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                    chmod +x ./cc-reporter
+            - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            - run: chmod +x ./cc-reporter
+            
             - save_cache:
                 paths:
                     - node_modules
