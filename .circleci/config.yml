@@ -57,7 +57,9 @@ jobs:
             - run: aws configure set default.s3.signature_version s3v4
             - run:
                 name: Deploy to S3
-                command: aws --region eu-central-1 s3 sync build s3://timy.sh/ --delete
+                command: |
+                    aws --region eu-central-1 s3 rm s3://timy.sh/ --exclude "mail/**"
+                    aws --region eu-central-1 s3 sync build s3://timy.sh/
 
 workflows:
     version: 2

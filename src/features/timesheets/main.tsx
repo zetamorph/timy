@@ -1,15 +1,39 @@
 import React from 'react';
-import { AddTimesheet } from './containers/AddTimesheet';
+import { connect } from 'react-redux';
+import { IAppState } from '../../store';
+import { CreateTimesheetForm } from './containers/CreateTimesheetForm';
+import { EditTimesheetForm } from './containers/EditTimesheetForm';
 import { RecentTimesheets } from './containers/RecentTimesheets';
+import { timesheetSelectors } from './store';
 
-export const TimesheetsPage = () => (
+interface IPropsFromState {
+    currentTimesheetId: string;
+}
+
+export const TimesheetsPageContainer = (props: IPropsFromState) => (
     <React.Fragment>
         <div style={{
             display: 'flex',
         }}>
-            <RecentTimesheets />
+            {
+                props.currentTimesheetId ?
+                <EditTimesheetForm /> :
+                <CreateTimesheetForm />
+            }
             <br />
-            <AddTimesheet />
+            <RecentTimesheets />
         </div>
     </React.Fragment>
 );
+
+const mapStateToProps = (state: IAppState) => ({
+    currentTimesheetId: timesheetSelectors.currentTimesheetIdSelector(state),
+});
+
+export const TimesheetPage = connect(
+    mapStateToProps,
+)(TimesheetsPageContainer);
+
+
+
+

@@ -15,6 +15,6 @@ export const deleteById = createStandardAction('@@timesheets/DELETED')
 
 export const setCurrentTimesheet = createStandardAction('@@timesheets/SET_CURRENT_TIMESHEET')
     .map((payload: string) => ({ payload }));
-    
+
 export const updateById = createStandardAction('@@timesheets/UPDATED')
     .map((payload: Partial<Timesheet> & { id: string }) => ({ payload }));

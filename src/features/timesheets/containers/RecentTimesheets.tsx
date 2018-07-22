@@ -6,6 +6,7 @@ import { recentTimesheetsSelector } from '../store/selectors';
 
 const mapDispatchToProps = {
     deleteTimesheet: (id: string) => timesheetActions.deleteById(id),
+    editTimesheet: (id: string) => timesheetActions.setCurrentTimesheet(id),
 };
 
 const mapStateToProps = (state: IAppState) => ({

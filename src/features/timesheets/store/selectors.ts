@@ -18,5 +18,5 @@ export const recentTimesheetsSelector = createSelector(
 export const currentTimesheetSelector = createSelector(
     timesheetsSelector,
     currentTimesheetIdSelector,
-    (timesheets: Timesheet[], currentId: string) => timesheets[currentId],
+    (timesheets: Timesheet[], currentId: string): Timesheet => timesheets[currentId],
 );

@@ -1,20 +1,14 @@
 import { Button, H4 } from '@blueprintjs/core';
 import React, { CSSProperties } from 'react';
-import { Field, InjectedFormProps } from 'redux-form';
-import { renderDateTimePicker, renderTextInput } from '../../../renderers';
-import { renderNumericInput } from '../../../renderers/form-renderers/render-numeric-input';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { renderDateTimePicker, renderTextInput, renderTimePicker } from '../../../renderers';
+import { Timesheet } from '../store';
 
-export interface ITimesheetFormData {
-    startDate: Date;
-    duration: number;
-    description: string;
-}
-
-export interface IProps extends ITimesheetFormData {
+export interface IProps extends Timesheet {
     handleSubmit: () => void;
 }
 
-export const TimesheetForm = (props: InjectedFormProps<IProps, {}>) => {
+const TimesheetFormComponent = (props: InjectedFormProps<IProps, {}>) => {
     const { submitting, handleSubmit, pristine } = props;
     
     const flexItemStyles: CSSProperties = {
@@ -51,7 +45,7 @@ export const TimesheetForm = (props: InjectedFormProps<IProps, {}>) => {
                         </div>
                         <div style={flexItemStyles}>
                             <H4 style={h4Styles}>Duration</H4>
-                            <Field name="duration" component={renderNumericInput}/>
+                            <Field name="duration" component={renderTimePicker}/>
                         </div>
                     </div>
                 </div>
@@ -72,3 +66,8 @@ export const TimesheetForm = (props: InjectedFormProps<IProps, {}>) => {
         </form>
     );
 };
+
+export const TimesheetForm = reduxForm({
+    form: 'timesheet',
+})(TimesheetFormComponent);
+
