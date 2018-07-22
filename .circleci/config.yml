@@ -30,4 +30,4 @@ jobs:
                 command: |
                     ./cc-reporter before-build
                     npm test -- --coverage
-                    ./cc-test-reporter after-build --exit-code $?
+                    ./cc-reporter after-build --exit-code $?
