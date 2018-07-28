@@ -1,25 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppState } from '../../store';
-import { CreateTimesheetForm } from './containers/CreateTimesheetForm';
-import { EditTimesheetForm } from './containers/EditTimesheetForm';
 import { RecentTimesheets } from './containers/RecentTimesheets';
+import { TimesheetFormContainer } from './containers/TimesheetFormContainer';
 import { timesheetSelectors } from './store';
 
 interface IPropsFromState {
     currentTimesheetId: string;
 }
 
-export const TimesheetsPageContainer = (props: IPropsFromState) => (
+export const TimesheetPageContainer = (props: IPropsFromState) => (
     <React.Fragment>
         <div style={{
             display: 'flex',
         }}>
-            {
-                props.currentTimesheetId ?
-                <EditTimesheetForm /> :
-                <CreateTimesheetForm />
-            }
+            <TimesheetFormContainer />
             <br />
             <RecentTimesheets />
         </div>
@@ -32,7 +27,7 @@ const mapStateToProps = (state: IAppState) => ({
 
 export const TimesheetPage = connect(
     mapStateToProps,
-)(TimesheetsPageContainer);
+)(TimesheetPageContainer);
 
 
 
